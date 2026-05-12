@@ -17,12 +17,11 @@
             margin: 0; padding: 0;
             background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: -apple-system, "PingFang TC", sans-serif;
-            overflow: hidden; /* 防止手機上下滑動干擾切換 */
+            font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+            overflow: hidden;
             width: 100%; height: 100%;
         }
 
-        /* 頁面切換核心 */
         .page {
             display: none;
             width: 100vw; height: 100vh;
@@ -36,7 +35,7 @@
             text-align: center;
         }
 
-        .page.active { display: flex; animation: fadeIn 0.4s ease; }
+        .page.active { display: flex; animation: fadeIn 0.5s ease; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
@@ -49,9 +48,13 @@
             margin-bottom: 20px;
         }
 
-        .content { width: 90%; max-width: 800px; font-size: clamp(1rem, 4vw, 1.3rem); line-height: 1.6; }
+        .content {
+            max-width: 800px;
+            width: 90%;
+            font-size: clamp(1rem, 4.5vw, 1.3rem);
+            line-height: 1.6;
+        }
 
-        /* P1 特殊大字 */
         .intro-center {
             font-size: clamp(2.5rem, 12vw, 5.5rem);
             font-weight: 900;
@@ -60,56 +63,58 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* 圖片容器自適應 */
-        .image-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; width: 100%; }
-        .ratio-9-16 { width: 140px; aspect-ratio: 9 / 16; background: #111; border-radius: 12px; overflow: hidden; }
-        @media (min-width: 600px) { .ratio-9-16 { width: 280px; } }
+        /* 圖片/影片容器自適應 */
+        .image-compare-row {
+            display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px; width: 100%;
+        }
+
+        .ratio-9-16 {
+            width: 40vw; max-width: 260px; aspect-ratio: 9 / 16;
+            background: #111; border-radius: 12px; overflow: hidden;
+        }
+
         .ratio-9-16 img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 影片容器 */
-        .ratio-16-9 { width: 90%; max-width: 800px; aspect-ratio: 16 / 9; background: #000; border-radius: 15px; overflow: hidden; }
-        video { width: 100%; height: 100%; object-fit: contain; }
+        .ratio-16-9 {
+            width: 90%; max-width: 800px; aspect-ratio: 16 / 9;
+            background: #000; border-radius: 15px; overflow: hidden;
+        }
 
-        /* 對比框 */
-        .comparison-layout { display: flex; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 1000px; }
-        .compare-box { flex: 1; min-width: 280px; padding: 25px; border-radius: 20px; text-align: left; }
+        .ratio-16-9 video { width: 100%; height: 100%; object-fit: contain; }
+
+        /* 對比卡片自適應 */
+        .comparison-layout {
+            display: flex; flex-wrap: wrap; gap: 15px; width: 100%; max-width: 950px;
+        }
+
+        .compare-box {
+            flex: 1; min-width: 280px; padding: 20px; border-radius: 20px; text-align: left;
+        }
         .bad-box { background: var(--bad-gradient); }
         .good-box { background: var(--good-gradient); }
 
-        /* 底部導航欄：針對 iPhone 觸控優化 */
+        /* 底部導航欄：修正 iPhone 點擊 */
         .nav-footer {
-            position: fixed;
-            bottom: env(safe-area-inset-bottom, 30px); /* 避開 iPhone 底部黑條 */
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            z-index: 9999;
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 40px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.2);
+            position: fixed; bottom: env(safe-area-inset-bottom, 30px);
+            left: 50%; transform: translateX(-50%);
+            display: flex; align-items: center; gap: 15px; z-index: 9999;
+            background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 40px;
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1);
         }
 
         .nav-btn {
-            background: rgba(255,255,255,0.1);
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            width: 44px; height: 44px; /* Apple 建議最小點擊區域 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
+            background: none; border: none; color: #fff; font-size: 1.5rem;
+            width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; -webkit-tap-highlight-color: transparent;
         }
 
         .dot-indicator { display: flex; gap: 8px; }
-        .dot { width: 8px; height: 8px; background: #444; border-radius: 50%; }
+        .dot { width: 8px; height: 8px; background: #444; border-radius: 50%; cursor: pointer; }
         .dot.active { background: #fff; box-shadow: 0 0 10px #fff; transform: scale(1.3); }
+
+        @media (max-width: 600px) {
+            .signature { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -122,7 +127,7 @@
     </div>
 
     <div class="page" id="p2">
-        <h1 class="colorful-title">第一次接觸AI</h1>
+        <h1 class="colorful-title">第一次接觸 AI</h1>
         <div class="content">
             <p>・iPhone 15 Pro</p>
             <p>・iOS18 Beta</p>
@@ -131,10 +136,10 @@
     </div>
 
     <div class="page" id="p3">
-        <h1 class="colorful-title">第一次接觸AI</h1>
-        <div class="image-row">
+        <h1 class="colorful-title">第一次接觸 AI</h1>
+        <div class="image-compare-row">
             <div class="ratio-9-16"><img src="Before.jpg" alt="Before"></div>
-            <div style="font-size: 2rem;">→</div>
+            <div style="font-size: 2rem; color: #fff;">→</div>
             <div class="ratio-9-16"><img src="After.jpg" alt="After"></div>
         </div>
     </div>
@@ -143,7 +148,7 @@
         <h1 class="colorful-title">作品介紹</h1>
         <div class="content" style="text-align: left;">
             <p style="color: #ff00cc; font-weight: bold; font-size: 1.5rem;">作品思路：</p>
-            <p>嘗試製作一條我從來未去過的冰島自駕旅行短片。</p>
+            <p>因為自己鍾意去旅行，所以想嘗試模仿現在網上的大熱AI短片，嘗試製作一條我從來未去過的冰島自駕旅行短片。</p>
         </div>
     </div>
 
@@ -156,20 +161,32 @@
 
     <div class="page" id="p6">
         <h1 class="colorful-title">創作思路</h1>
-        <div class="content">幫我製作一條30秒嘅旅遊影片。背景為冰島七日六夜女生自駕遊。</div>
-        <img src="table.png" style="width: 100%; max-width: 500px; border-radius: 10px; margin-top: 20px;">
+        <div class="content">幫我製作一條 30 秒嘅旅遊影片。背景為冰島七日六夜女生自駕遊，一位女生獨自駕駛汽車在冰島的旅遊影片。</div>
+        <img src="table.png" style="width: 90%; max-width: 500px; border-radius: 10px; margin-top: 20px;">
     </div>
 
     <div class="page" id="p7">
         <h1 class="colorful-title">AI 是你的旅遊助手</h1>
         <div class="comparison-layout">
             <div class="compare-box bad-box">
-                <h3 style="font-size: 3rem;">😫</h3>
-                <p>花大量時間 Check Maps、篩選餐廳、遇到突發落雨要重新搜尋行程。</p>
+                <p style="font-size: 3rem; margin: 0;">😫</p>
+                <div class="content" style="font-size: 0.95rem; text-align: left; width: 100%;">
+                    <ul>
+                        <li>花大量時間用Google Maps check 距離、餐廳營業時間。</li>
+                        <li>在眾多旅遊Blogger中篩選一家人合適的餐廳，或者適合老友記的景點。</li>
+                        <li>遇到突發情況(落雨、公共交通停駛等)，要重新上網搜尋新的行程。</li>
+                    </ul>
+                </div>
             </div>
             <div class="compare-box good-box">
-                <h3 style="font-size: 3rem;">✨</h3>
-                <p>一個指令搵出景點、篩選合適餐廳、快速獲取替代方案。</p>
+                <p style="font-size: 3rem; margin: 0;">✨</p>
+                <div class="content" style="font-size: 0.95rem; text-align: left; width: 100%;">
+                    <ul>
+                        <li>一個指令幫你搵出必去人氣景點、高評分餐廳。</li>
+                        <li>一個指令「我帶小朋友/老人家....」，立即篩選出適合你的一切。</li>
+                        <li>一個指令幫你搵替代方案。</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -177,7 +194,7 @@
     <div class="page" id="p8">
         <h1 class="colorful-title">互動時間</h1>
         <div class="content">
-            <p>請用你的 AI 工具制定一個一日行程：</p>
+            <p>大家現在用自己手機上任何一個AI工具，去制定一個一日行程。完成後各位可以和身邊小伙伴對比一下分別。</p>
             <ul style="text-align: left; display: inline-block;">
                 <li>・台北一日遊 ✈️</li>
                 <li>・Apple A13 信義店 🍎</li>
@@ -189,10 +206,10 @@
     <div class="page" id="p9">
         <h1 class="colorful-title">與客人互動</h1>
         <div class="content">
-            <ul style="text-align: left; list-style: none;">
+            <ul style="text-align: left; list-style: none; padding: 0;">
                 <li>・以自身興趣產生共鳴</li>
-                <li>・分享使用 AI 的感受</li>
-                <li>・分享設備上的功能</li>
+                <li>・分享使用 AI 的真實感受</li>
+                <li>・分享設備上的隱藏功能</li>
             </ul>
         </div>
     </div>
@@ -210,21 +227,21 @@
     </div>
 
     <div class="nav-footer">
-        <button class="nav-btn" id="prevBtn">‹</button>
+        <button class="nav-btn" onclick="movePage(-1)">&lt;</button>
         <div class="dot-indicator" id="dotContainer"></div>
-        <button class="nav-btn" id="nextBtn">›</button>
+        <button class="nav-btn" onclick="movePage(1)">&gt;</button>
     </div>
 
     <script>
         let currentPage = 1;
         const totalPages = 11;
 
-        // 生成圓點
         const dotContainer = document.getElementById('dotContainer');
         for (let i = 1; i <= totalPages; i++) {
             const dot = document.createElement('div');
             dot.className = i === 1 ? 'dot active' : 'dot';
             dot.id = 'dot' + i;
+            dot.onclick = (e) => { e.stopPropagation(); jumpToPage(i); };
             dotContainer.appendChild(dot);
         }
 
@@ -235,27 +252,14 @@
             currentPage = target;
             document.getElementById('p' + currentPage).classList.add('active');
             document.getElementById('dot' + currentPage).classList.add('active');
-            // 換頁時停止所有影片
             document.querySelectorAll('video').forEach(v => v.pause());
         }
 
-        // 監聽按鈕（支援手機 Touch 與電腦 Click）
-        const prev = document.getElementById('prevBtn');
-        const next = document.getElementById('nextBtn');
+        function movePage(step) { jumpToPage(currentPage + step); }
 
-        const handlePrev = (e) => { e.preventDefault(); jumpToPage(currentPage - 1); };
-        const handleNext = (e) => { e.preventDefault(); jumpToPage(currentPage + 1); };
-
-        prev.addEventListener('touchstart', handlePrev);
-        prev.addEventListener('click', () => jumpToPage(currentPage - 1));
-        next.addEventListener('touchstart', handleNext);
-        next.addEventListener('click', () => jumpToPage(currentPage + 1));
-
-        // 音樂處理
         document.addEventListener('touchstart', () => {
-            const audio = document.getElementById('bgMusic');
-            audio.volume = 0.05;
-            audio.play();
+            const m = document.getElementById('bgMusic');
+            if(m.paused) { m.volume = 0.05; m.play(); }
         }, { once: true });
     </script>
 </body>
