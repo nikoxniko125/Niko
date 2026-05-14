@@ -57,7 +57,7 @@
         }
 
         .p6-img-box {
-            width: 95%; 
+            width: 95%;
             max-width: 1100px;
             max-height: 55vh;
             margin-top: 10px;
@@ -69,7 +69,6 @@
         }
         .p6-img-box img { width: 100%; height: auto; object-fit: contain; }
 
-        /* P7 對比卡片優化版 */
         .comparison-layout {
             display: flex;
             flex-wrap: wrap;
@@ -83,13 +82,13 @@
         .compare-box {
             flex: 1;
             min-width: 300px;
-            padding: 35px 25px; /* 加大內邊距 */
+            padding: 35px 25px;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 380px; /* 稍微增加高度令佢更佔位 */
+            min-height: 380px;
             justify-content: flex-start;
         }
         .bad-box { background: var(--bad-gradient); box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
@@ -97,15 +96,14 @@
 
         .emoji-placeholder { font-size: 4rem; margin-bottom: 20px; }
 
-        /* 針對 P7 文字大小與間距嘅優化 */
-        .box-text { 
-            text-align: left; 
-            width: 100%; 
-            font-size: 1.25rem; /* 字體加大 */
-            line-height: 1.8; /* 增加行距 */
+        .box-text {
+            text-align: left;
+            width: 100%;
+            font-size: 1.25rem;
+            line-height: 1.8;
         }
         .box-text ul { padding-left: 20px; margin: 0; }
-        .box-text li { margin-bottom: 15px; } /* 增加每句之間嘅間距 */
+        .box-text li { margin-bottom: 15px; }
 
         .ratio-9-16 { width: 35vw; max-width: 240px; aspect-ratio: 9 / 16; background: #111; border-radius: 12px; overflow: hidden; }
         .ratio-9-16 img { width: 100%; height: 100%; object-fit: cover; }
@@ -113,7 +111,8 @@
         .ratio-16-9 video { width: 100%; height: 100%; object-fit: contain; }
 
         .nav-footer {
-            position: fixed; bottom: env(safe-area-inset-bottom, 30px);
+            position: fixed;
+            bottom: calc(env(safe-area-inset-bottom, 0px) + 30px);
             left: 50%; transform: translateX(-50%);
             display: flex; align-items: center; gap: 15px; z-index: 9999;
             background: rgba(255,255,255,0.1); padding: 8px 18px; border-radius: 40px;
@@ -136,6 +135,7 @@
         <source src="bgm1.m4a" type="audio/mp4">
     </audio>
 
+    <!-- P1 -->
     <div class="page active" id="p1">
         <div style="font-size: clamp(2.5rem, 12vw, 5rem); font-weight: 900; background: var(--title-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Coffee with...</div>
         <div style="margin-top: 10px; color: #888;">Travel - Niko Lei</div>
@@ -153,11 +153,11 @@
     <div class="page" id="p3">
         <h1 class="colorful-title">第一次接觸 AI</h1>
         <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-            <div class="ratio-9-16"><img src="Before.jpg" alt="Before"></div>
+            <div class="ratio-9-16" style="width: 40vw; max-width: 300px;"><img src="Before.jpg" alt="Before"></div>
             <div style="font-size: 2rem; color: #fff;">→</div>
-            <div class="ratio-9-16"><img src="After.jpg" alt="After"></div>
+            <div class="ratio-9-16" style="width: 40vw; max-width: 300px;"><img src="After.jpg" alt="After"></div>
         </div>
-    </div>
+    </div> 
 
     <div class="page" id="p4">
         <h1 class="colorful-title">作品介紹</h1>
@@ -166,6 +166,7 @@
             <p>因為自己鍾意去旅行，所以想嘗試模仿現在網上的大熱AI短片，嘗試製作一條我從來未去過的冰島自駕旅行短片。</p>
         </div>
     </div>
+
 
     <div class="page" id="p5">
         <h1 class="colorful-title">作品展示</h1>
@@ -179,6 +180,7 @@
         <div class="content">幫我製作一條30秒嘅旅遊影片。背景為冰島七日六夜女生自駕遊。</div>
         <div class="p6-img-box"><img src="table.png" alt="創作思路表格"></div>
     </div>
+
 
     <div class="page" id="p7">
         <h1 class="colorful-title">AI是你的私人旅遊小助手</h1>
@@ -242,6 +244,7 @@
         <p style="font-size: 2rem; color: #fff;">Thank you!</p>
     </div>
 
+    <!-- Nav -->
     <div class="nav-footer">
         <button class="nav-btn" onclick="movePage(-1)">&lt;</button>
         <div style="display: flex; gap: 8px;" id="dotContainer"></div>
