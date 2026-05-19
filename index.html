@@ -105,6 +105,54 @@
         .box-text ul { padding-left: 20px; margin: 0; }
         .box-text li { margin-bottom: 15px; }
 
+        /* P9 軟件介紹 左右並排佈局優化 */
+        .software-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            width: 95%;
+            max-width: 1200px;
+            margin-top: 10px;
+            flex-wrap: wrap; /* 確保手機不夠闊時自動換行 */
+        }
+        
+        .software-item {
+            flex: 1;
+            min-width: 340px; /* 設定最小寬度 */
+            display: flex;
+            flex-direction: row; /* 強制字喺圖隔離橫排 */
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .software-name {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: bold;
+            color: #ffffff;
+            white-space: nowrap; /* 防止英文字母斷行 */
+        }
+        
+        .software-img-box {
+            width: 120px; /* 固定圖片寬度，令排版整齊 */
+            aspect-ratio: 9 / 16;
+            background: #111;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(255,255,255,0.1);
+        }
+        
+        .software-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .ratio-9-16 { width: 35vw; max-width: 240px; aspect-ratio: 9 / 16; background: #111; border-radius: 12px; overflow: hidden; }
         .ratio-9-16 img { width: 100%; height: 100%; object-fit: cover; }
         .ratio-16-9 { width: 90%; max-width: 750px; aspect-ratio: 16 / 9; background: #000; border-radius: 15px; overflow: hidden; }
@@ -126,6 +174,9 @@
             .box-text { font-size: 1.1rem; line-height: 1.6; }
             .compare-box { min-height: auto; padding: 25px 20px; }
             .p6-img-box { max-height: 45vh; }
+            /* 手機版微調：如果打橫排太逼，手機版會自動變返上下排 */
+            .software-item { flex-direction: column; min-width: 140px; padding: 15px; gap: 10px; }
+            .software-img-box { width: 100px; }
         }
     </style>
 </head>
@@ -135,7 +186,6 @@
         <source src="bgm1.m4a" type="audio/mp4">
     </audio>
 
-    <!-- P1 -->
     <div class="page active" id="p1">
         <div style="font-size: clamp(2.5rem, 12vw, 5rem); font-weight: 900; background: var(--title-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Coffee with...</div>
         <div style="margin-top: 10px; color: #888;">Travel - Niko Lei</div>
@@ -193,7 +243,6 @@
         </div>
     </div>
 
-
     <div class="page" id="p6">
         <h1 class="colorful-title">作品展示</h1>
         <div class="ratio-16-9">
@@ -209,7 +258,6 @@
         <div style="font-size: 2rem; color: #fff; margin: 5px 0;">↓</div>
         <div class="p6-img-box"><img src="table.png" alt="創作思路表格"></div>
     </div>
-
 
     <div class="page" id="p8">
         <h1 class="colorful-title" style="font-size: 3.5rem;">互動時間</h1>
@@ -230,18 +278,18 @@
             <div class="software-item">
                 <div class="software-name">Wanderlog</div>
                 <div class="software-img-box">
-                    <img src="wander.png" alt="Wanderlog 軟件截圖">
+                    <img src="wanderlog.png" alt="Wanderlog 軟件截圖">
                 </div>
             </div>
             <div class="software-item">
                 <div class="software-name">圓周旅迹</div>
                 <div class="software-img-box">
-                    <img src="circle.png" alt="圓周旅迹 軟件截圖">
+                    <img src="circle_travel.png" alt="圓周旅迹 軟件截圖">
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="page" id="p10">
         <h1 class="colorful-title">與客人互動</h1>
         <div class="content">
@@ -265,7 +313,6 @@
         <p style="font-size: 2rem; color: #fff;">Thank you!</p>
     </div>
 
-    <!-- Nav -->
     <div class="nav-footer">
         <button class="nav-btn" onclick="movePage(-1)">&lt;</button>
         <div style="display: flex; gap: 8px;" id="dotContainer"></div>
@@ -300,7 +347,7 @@
 
         function forcePlayMusic() {
             if (bgMusic && bgMusic.paused) {
-                bgMusic.volume = 0.08;
+                bgMusic.volume = 0.04;
                 bgMusic.play().catch(() => { console.log("Waiting for user interaction"); });
             }
         }
